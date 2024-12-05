@@ -1,0 +1,87 @@
+USE chicago_taxi;
+CREATE TABLE company (
+    company_id INT PRIMARY KEY,
+    company VARCHAR(100)
+);
+
+CREATE TABLE taxi (
+    taxi_id INT PRIMARY KEY,
+    taxi_id_original VARCHAR(128)
+);
+
+CREATE TABLE location (
+    location_id INT PRIMARY KEY,
+    longitude DECIMAL(9,6),
+    latitude DECIMAL(9,6),
+    location POINT
+);
+
+CREATE TABLE payment_type (
+    payment_type_id INT PRIMARY KEY,
+    payment_type VARCHAR(15)
+);
+
+CREATE TABLE traffic_region (
+    region_id INT PRIMARY KEY,
+    region VARCHAR(100),
+    west_longitude DECIMAL(9,6),
+    west_latitude DECIMAL(9,6),
+    south_latitude DECIMAL(9,6),
+    north_latitude DECIMAL(9,6),
+    description TEXT,
+    current_speed INT,
+    mv_location POINT
+);
+
+CREATE TABLE census_tract (
+    census_tract_id INT PRIMARY KEY,
+    census_tract VARCHAR(45)
+);
+
+CREATE TABLE trip (
+    trip_id INT PRIMARY KEY,
+    start_timestamp DATETIME,
+    end_timestamp DATETIME,
+    seconds INT,
+    miles INT,
+    fare DECIMAL(6,2),
+    tips DECIMAL(6,2),
+    tolls DECIMAL(6,2),
+    extras DECIMAL(6,2),
+    trip_total DECIMAL(7,2),
+    location_id INT,
+    company_id INT,
+    taxi_id INT,
+    payment_type_id INT,
+    FOREIGN KEY (location_id) REFERENCES location(location_id),
+    FOREIGN KEY (company_id) REFERENCES company(company_id),
+    FOREIGN KEY (taxi_id) REFERENCES taxi(taxi_id),
+    FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)
+);
+
+CREATE TABLE trip_congestion (
+    trip_id INT,
+    traffic_congestion_id INT,
+    PRIMARY KEY (trip_id, traffic_congestion_id),
+    FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
+);
+
+CREATE TABLE traffic_congestion (
+    congestion_id INT PRIMARY KEY,
+    time DATETIME,
+    traffic_region_id INT,
+    speed_percent DECIMAL(5,2),
+    bus_count INT,
+    hour INT,
+    day_of_week INT,
+    month INT,
+    FOREIGN KEY (traffic_region_id) REFERENCES traffic_region(region_id)
+);
+
+CREATE TABLE trip_tract (
+    trip_id INT,
+    census_tract_id INT,
+    PRIMARY KEY (trip_id, census_tract_id),
+    FOREIGN KEY (trip_id) REFERENCES trip(trip_id),
+    FOREIGN KEY (census_tract_id) REFERENCES census_tract(census_tract_id)
+);
