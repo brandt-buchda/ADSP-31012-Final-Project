@@ -1,8 +1,4 @@
-import os
-import random
-
 import pymysql
-from pathlib import Path
 
 TABLES = [
     "taxi_trips_2019_raw",
@@ -17,7 +13,6 @@ def get_column_names(cursor, table_name):
     cursor.execute(f"SHOW COLUMNS FROM {table_name}")
     columns = cursor.fetchall()
     return [column[0] for column in columns]
-
 
 def main():
     local = pymysql.connect(host="localhost", user="root", password="rootroot", db="chicago_taxi")
