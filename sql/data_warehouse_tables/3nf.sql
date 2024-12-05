@@ -1,27 +1,26 @@
-USE chicago_taxi;
-CREATE TABLE company (
+CREATE TABLE IF NOT EXISTS chicago_taxi.company (
     company_id INT PRIMARY KEY,
     company VARCHAR(100)
 );
 
-CREATE TABLE taxi (
+CREATE TABLE IF NOT EXISTS chicago_taxi.taxi (
     taxi_id INT PRIMARY KEY,
     taxi_id_original VARCHAR(128)
 );
 
-CREATE TABLE location (
+CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location_id INT PRIMARY KEY,
     longitude DECIMAL(9,6),
     latitude DECIMAL(9,6),
     location POINT
 );
 
-CREATE TABLE payment_type (
+CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type_id INT PRIMARY KEY,
     payment_type VARCHAR(15)
 );
 
-CREATE TABLE traffic_region (
+CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
     region VARCHAR(100),
     west_longitude DECIMAL(9,6),
@@ -33,12 +32,12 @@ CREATE TABLE traffic_region (
     mv_location POINT
 );
 
-CREATE TABLE census_tract (
+CREATE TABLE IF NOT EXISTS chicago_taxi.census_tract (
     census_tract_id INT PRIMARY KEY,
     census_tract VARCHAR(45)
 );
 
-CREATE TABLE trip (
+CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
     trip_id INT PRIMARY KEY,
     start_timestamp DATETIME,
     end_timestamp DATETIME,
@@ -59,14 +58,14 @@ CREATE TABLE trip (
     FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)
 );
 
-CREATE TABLE trip_congestion (
+CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
     trip_id INT,
     traffic_congestion_id INT,
     PRIMARY KEY (trip_id, traffic_congestion_id),
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
 );
 
-CREATE TABLE traffic_congestion (
+CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
     congestion_id INT PRIMARY KEY,
     time DATETIME,
     traffic_region_id INT,
@@ -78,7 +77,7 @@ CREATE TABLE traffic_congestion (
     FOREIGN KEY (traffic_region_id) REFERENCES traffic_region(region_id)
 );
 
-CREATE TABLE trip_tract (
+CREATE TABLE IF NOT EXISTS chicago_taxi.trip_tract (
     trip_id INT,
     census_tract_id INT,
     PRIMARY KEY (trip_id, census_tract_id),
