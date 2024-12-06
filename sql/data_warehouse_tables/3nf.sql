@@ -1,23 +1,23 @@
 CREATE TABLE IF NOT EXISTS chicago_taxi.company (
-    company_id INT PRIMARY KEY,
-    company VARCHAR(100)
+    company_id INT PRIMARY KEY AUTO_INCREMENT,
+    company VARCHAR(64)
 );
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.taxi (
-    taxi_id INT PRIMARY KEY,
-    taxi_id_original VARCHAR(128)
+    taxi_id INT PRIMARY KEY AUTO_INCREMENT,
+    taxi_id_original BINARY(64)
 );
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.location (
-    location_id INT PRIMARY KEY,
-    longitude DECIMAL(9,6),
-    latitude DECIMAL(9,6),
+    location_id INT PRIMARY KEY AUTO_INCREMENT,
+    longitude DECIMAL(11,9),
+    latitude DECIMAL(11,9),
     location POINT
 );
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type_id INT PRIMARY KEY,
-    payment_type VARCHAR(15)
+    payment_type VARCHAR(32)
 );
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
