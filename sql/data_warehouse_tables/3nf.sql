@@ -15,18 +15,19 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location POINT
 );
 
+DROP TABLE IF EXISTS chicago_taxi.payment_type;
 CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
-    payment_type_id INT PRIMARY KEY,
+    payment_type_id INT PRIMARY KEY AUTO_INCREMENT,
     payment_type VARCHAR(32)
 );
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
     region VARCHAR(64),
-    west_longitude DECIMAL(9,6),
-    west_latitude DECIMAL(9,6),
-    south_latitude DECIMAL(9,6),
-    north_latitude DECIMAL(9,6),
+    west_longitude DECIMAL(11,9),
+    west_latitude DECIMAL(11,9),
+    south_latitude DECIMAL(11,9),
+    north_latitude DECIMAL(11,9),
     description TEXT,
     current_speed INT,
     mv_location POINT
