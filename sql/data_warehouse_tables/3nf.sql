@@ -1,16 +1,19 @@
 # Andy
+DROP TABLE IF EXISTS chicago_taxi.company;
 CREATE TABLE IF NOT EXISTS chicago_taxi.company (
     company_id INT PRIMARY KEY AUTO_INCREMENT,
     company VARCHAR(64)
 );
 
-# Brandt
+# Brandt COMPLETE
+DROP TABLE IF EXISTS chicago_taxi.taxi;
 CREATE TABLE IF NOT EXISTS chicago_taxi.taxi (
     taxi_id INT PRIMARY KEY AUTO_INCREMENT,
-    taxi_id_original BINARY(64)
+    taxi_id_original BINARY(64) UNIQUE
 );
 
 # Rick
+DROP TABLE IF EXISTS chicago_taxi.location;
 CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location_id INT PRIMARY KEY AUTO_INCREMENT,
     longitude DECIMAL(11,9),
@@ -18,14 +21,15 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location POINT
 );
 
-# DONE
+# Brandt COMPLETE
 DROP TABLE IF EXISTS chicago_taxi.payment_type;
 CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type_id INT PRIMARY KEY AUTO_INCREMENT,
-    payment_type VARCHAR(32)
+    payment_type VARCHAR(32) UNIQUE
 );
 
 # Andy
+DROP TABLE IF EXISTS chicago_taxi.traffic_region;
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
     region VARCHAR(64),
@@ -39,34 +43,38 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
 );
 
 # Rick
+DROP TABLE IF EXISTS chicago_taxi.census_tract;
 CREATE TABLE IF NOT EXISTS chicago_taxi.census_tract (
-    census_tract_id INT PRIMARY KEY,
-    census_tract VARCHAR(45)
+    census_tract_id INT PRIMARY KEY AUTO_INCREMENT,
+    census_tract CHAR(11)
 );
 
 # LAST
+DROP TABLE IF EXISTS chicago_taxi.trip;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
-    trip_id INT PRIMARY KEY,
+    trip_id BINARY(20) PRIMARY KEY,
     start_timestamp DATETIME,
     end_timestamp DATETIME,
-    seconds INT,
-    miles INT,
-    fare DECIMAL(5,2),
-    tips DECIMAL(5,2),
-    tolls DECIMAL(5,2),
-    extras DECIMAL(5,2),
-    trip_total DECIMAL(6,2),
-    location_id INT,
+    seconds SMALLINT UNSIGNED,
+    miles DECIMAL(5,2),
+    fare DECIMAL(5,2) NULL,
+    tips DECIMAL(5,2) NULL,
+    extras DECIMAL(5,2) NULL,
+    total DECIMAL(6,2),
+    pickup_location_id INT,
+    dropoff_location_id INT,
     company_id INT,
-    taxi_id INT,
+    taxi_id INT NULL,
     payment_type_id INT,
-    FOREIGN KEY (location_id) REFERENCES location(location_id),
+    FOREIGN KEY (pickup_location_id) REFERENCES location(location_id),
+    FOREIGN KEY (dropoff_location_id) REFERENCES location(location_id),
     FOREIGN KEY (company_id) REFERENCES company(company_id),
     FOREIGN KEY (taxi_id) REFERENCES taxi(taxi_id),
     FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)
 );
 
 # Joshua
+DROP TABLE IF EXISTS chicago_taxi.trip_congestion;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
     trip_id INT,
     traffic_congestion_id INT,
@@ -76,6 +84,7 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
 
 
 # Joshua
+DROP TABLE IF EXISTS chicago_taxi.traffic_congestion;
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
     congestion_id INT PRIMARY KEY,
     time DATETIME,
@@ -88,6 +97,8 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
     FOREIGN KEY (traffic_region_id) REFERENCES traffic_region(region_id)
 );
 
+# LAST
+DROP TABLE IF EXISTS chicago_taxi.trip_tract;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip_tract (
     trip_id INT,
     census_tract_id INT,
