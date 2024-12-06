@@ -1,13 +1,16 @@
+# Andy
 CREATE TABLE IF NOT EXISTS chicago_taxi.company (
     company_id INT PRIMARY KEY AUTO_INCREMENT,
     company VARCHAR(64)
 );
 
+# Brandt
 CREATE TABLE IF NOT EXISTS chicago_taxi.taxi (
     taxi_id INT PRIMARY KEY AUTO_INCREMENT,
     taxi_id_original BINARY(64)
 );
 
+# Rick
 CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location_id INT PRIMARY KEY AUTO_INCREMENT,
     longitude DECIMAL(11,9),
@@ -15,12 +18,14 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location POINT
 );
 
+# DONE
 DROP TABLE IF EXISTS chicago_taxi.payment_type;
 CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type_id INT PRIMARY KEY AUTO_INCREMENT,
     payment_type VARCHAR(32)
 );
 
+# Andy
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
     region VARCHAR(64),
@@ -33,22 +38,24 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     mv_location POINT
 );
 
+# Rick
 CREATE TABLE IF NOT EXISTS chicago_taxi.census_tract (
     census_tract_id INT PRIMARY KEY,
     census_tract VARCHAR(45)
 );
 
+# LAST
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
     trip_id INT PRIMARY KEY,
     start_timestamp DATETIME,
     end_timestamp DATETIME,
     seconds INT,
     miles INT,
-    fare DECIMAL(6,2),
-    tips DECIMAL(6,2),
-    tolls DECIMAL(6,2),
-    extras DECIMAL(6,2),
-    trip_total DECIMAL(7,2),
+    fare DECIMAL(5,2),
+    tips DECIMAL(5,2),
+    tolls DECIMAL(5,2),
+    extras DECIMAL(5,2),
+    trip_total DECIMAL(6,2),
     location_id INT,
     company_id INT,
     taxi_id INT,
@@ -59,6 +66,7 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
     FOREIGN KEY (payment_type_id) REFERENCES payment_type(payment_type_id)
 );
 
+# Joshua
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
     trip_id INT,
     traffic_congestion_id INT,
@@ -66,6 +74,8 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
 );
 
+
+# Joshua
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
     congestion_id INT PRIMARY KEY,
     time DATETIME,
