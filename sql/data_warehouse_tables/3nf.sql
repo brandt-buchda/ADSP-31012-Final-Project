@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS chicago_taxi.company;
 CREATE TABLE IF NOT EXISTS chicago_taxi.company (
     company_id INT PRIMARY KEY AUTO_INCREMENT,
-    company VARCHAR(64)
+    company VARCHAR(64) UNIQUE
 );
 
 # Brandt COMPLETE
@@ -28,25 +28,37 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type VARCHAR(32) UNIQUE
 );
 
-# Andy
-DROP TABLE IF EXISTS chicago_taxi.traffic_region;
-CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
-    region_id INT PRIMARY KEY,
-    region VARCHAR(64),
-    west_longitude DECIMAL(11,9),
-    west_latitude DECIMAL(11,9),
-    south_latitude DECIMAL(11,9),
-    north_latitude DECIMAL(11,9),
-    description TEXT,
-    current_speed INT,
-    mv_location POINT
-);
-
 # Rick
 DROP TABLE IF EXISTS chicago_taxi.census_tract;
 CREATE TABLE IF NOT EXISTS chicago_taxi.census_tract (
     census_tract_id INT PRIMARY KEY AUTO_INCREMENT,
     census_tract CHAR(11)
+);
+
+# Andy
+DROP TABLE IF EXISTS chicago_taxi.traffic_region;
+CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
+    region_id INT PRIMARY KEY,
+    region VARCHAR(64),
+    description TEXT,
+    nw_location_id INT,
+    se_location_id INT,
+    FOREIGN KEY (nw_location_id) REFERENCES location(location_id),
+    FOREIGN KEY (se_location_id) REFERENCES location(location_id)
+);
+
+# Joshua
+DROP TABLE IF EXISTS chicago_taxi.traffic_congestion;
+CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
+    congestion_id INT PRIMARY KEY AUTO_INCREMENT,
+    time DATETIME,
+    region_id INT,
+    speed_percent DECIMAL(5,2),
+    bus_count INT,
+    hour INT,
+    day_of_week INT,
+    month INT,
+    FOREIGN KEY (region_id) REFERENCES traffic_region(region_id)
 );
 
 # LAST
@@ -76,31 +88,16 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
 # Joshua
 DROP TABLE IF EXISTS chicago_taxi.trip_congestion;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip_congestion (
-    trip_id INT,
+    trip_id BINARY(20),
     traffic_congestion_id INT,
     PRIMARY KEY (trip_id, traffic_congestion_id),
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
 );
 
-
-# Joshua
-DROP TABLE IF EXISTS chicago_taxi.traffic_congestion;
-CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
-    congestion_id INT PRIMARY KEY,
-    time DATETIME,
-    traffic_region_id INT,
-    speed_percent DECIMAL(5,2),
-    bus_count INT,
-    hour INT,
-    day_of_week INT,
-    month INT,
-    FOREIGN KEY (traffic_region_id) REFERENCES traffic_region(region_id)
-);
-
 # LAST
 DROP TABLE IF EXISTS chicago_taxi.trip_tract;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip_tract (
-    trip_id INT,
+    trip_id BINARY(20),
     census_tract_id INT,
     PRIMARY KEY (trip_id, census_tract_id),
     FOREIGN KEY (trip_id) REFERENCES trip(trip_id),

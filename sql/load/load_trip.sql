@@ -13,12 +13,13 @@ SELECT
     l1.location_id as pickup_location_id,
     l2.location_id as dropoff_location_id,
     c.company_id,
-    t.taxi_id,
+    ta.taxi_id,
     p.payment_type_id
 FROM chicago_taxi.taxi_trips_staging t
 INNER JOIN chicago_taxi.location l1 ON t.pickup_centroid_location = l1.location
 INNER JOIN chicago_taxi.location l2 ON t.dropoff_centroid_location = l2.location
 INNER JOIN chicago_taxi.company c ON t.company = c.company
+INNER JOIN chicago_taxi.taxi ta on ta.taxi_id_original = t.taxi_id
 INNER JOIN chicago_taxi.payment_type p ON t.payment_type = p.payment_type;
 
 # Insert from Network Provider Trips
