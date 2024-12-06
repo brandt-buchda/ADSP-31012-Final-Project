@@ -20,7 +20,8 @@ INNER JOIN chicago_taxi.location l1 ON t.pickup_centroid_location = l1.location
 INNER JOIN chicago_taxi.location l2 ON t.dropoff_centroid_location = l2.location
 INNER JOIN chicago_taxi.company c ON t.company = c.company
 INNER JOIN chicago_taxi.taxi ta on ta.taxi_id_original = t.taxi_id
-INNER JOIN chicago_taxi.payment_type p ON t.payment_type = p.payment_type;
+INNER JOIN chicago_taxi.payment_type p ON t.payment_type = p.payment_type
+WHERE extras + tolls < 999.99;
 
 # Insert from Network Provider Trips
 INSERT INTO chicago_taxi.trip

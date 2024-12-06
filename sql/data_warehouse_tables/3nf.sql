@@ -1,18 +1,18 @@
-# Andy
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.company;
 CREATE TABLE IF NOT EXISTS chicago_taxi.company (
     company_id INT PRIMARY KEY AUTO_INCREMENT,
     company VARCHAR(64) UNIQUE
 );
 
-# Brandt COMPLETE
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.taxi;
 CREATE TABLE IF NOT EXISTS chicago_taxi.taxi (
     taxi_id INT PRIMARY KEY AUTO_INCREMENT,
     taxi_id_original BINARY(64) UNIQUE
 );
 
-# Rick
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.location;
 CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -21,21 +21,21 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.location (
     location POINT
 );
 
-# Brandt COMPLETE
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.payment_type;
 CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
     payment_type_id INT PRIMARY KEY AUTO_INCREMENT,
     payment_type VARCHAR(32) UNIQUE
 );
 
-# Rick
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.census_tract;
 CREATE TABLE IF NOT EXISTS chicago_taxi.census_tract (
     census_tract_id INT PRIMARY KEY AUTO_INCREMENT,
     census_tract CHAR(11)
 );
 
-# Andy
+# COMPLETE!
 DROP TABLE IF EXISTS chicago_taxi.traffic_region;
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_congestion (
     FOREIGN KEY (region_id) REFERENCES traffic_region(region_id)
 );
 
-# LAST
+# ONGOING...
 DROP TABLE IF EXISTS chicago_taxi.trip;
 CREATE TABLE IF NOT EXISTS chicago_taxi.trip (
     trip_id BINARY(20) PRIMARY KEY,

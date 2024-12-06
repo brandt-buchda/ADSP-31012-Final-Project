@@ -71,8 +71,3 @@ WHERE
         l1.latitude IS NULL OR
         (l2.longitude IS NOT NULL AND l2.latitude IS NOT NULL AND l1.location_id > l2.location_id)
     );
-
-SELECT location, COUNT(*) as count
-FROM chicago_taxi.location
-GROUP BY location
-HAVING count > 1;
