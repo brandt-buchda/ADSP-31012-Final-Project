@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS chicago_taxi.payment_type (
 
 CREATE TABLE IF NOT EXISTS chicago_taxi.traffic_region (
     region_id INT PRIMARY KEY,
-    region VARCHAR(100),
+    region VARCHAR(64),
     west_longitude DECIMAL(9,6),
     west_latitude DECIMAL(9,6),
     south_latitude DECIMAL(9,6),
