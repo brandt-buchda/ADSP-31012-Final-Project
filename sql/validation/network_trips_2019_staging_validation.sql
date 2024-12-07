@@ -31,6 +31,7 @@ WHERE
     ((NULLIF(TRIM(TRAILING '\r' FROM dropoff_centroid_location), '') IS NULL) OR
     (dropoff_centroid_location REGEXP 'POINT (.*\\..* .*\\..*)' AND ST_IsValid(ST_GeomFromText(dropoff_centroid_location))));
 
+SHOW PROCESSLIST;
 
 INSERT INTO chicago_taxi.network_trips_staging
 SELECT
